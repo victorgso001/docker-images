@@ -1,0 +1,10 @@
+version: '3.3'
+services:
+  app:
+    image: victorgso001/alpine-php-7:latest
+    container_name: merchantapp_api
+    volumes:
+      - ./:/home/project-folder
+    ports:
+      - 8010:80
+
