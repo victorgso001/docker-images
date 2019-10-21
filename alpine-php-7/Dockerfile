@@ -41,10 +41,10 @@ RUN rm -Rf /var/cache/apk/*
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer
 
 #Configurando Nginx
-COPY https://raw.githubusercontent.com/victorgso001/docker-images/master/alpine-php-7/nginx.conf /etc/nginx/nginx.conf
+CURL -o /etc/nginx/nginx.conf https://raw.githubusercontent.com/victorgso001/docker-images/master/alpine-php-7/nginx.conf
 
 #Configurando supervisor
-COPY https://raw.githubusercontent.com/victorgso001/docker-images/master/alpine-php-7/supervisord.conf /etc/supervisord.conf
+CURL -o /etc/supervisord.conf https://raw.githubusercontent.com/victorgso001/docker-images/master/alpine-php-7/supervisord.conf
 
 #Criando diretório de aplicação
 RUN mkdir -p /app
