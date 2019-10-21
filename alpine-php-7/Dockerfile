@@ -7,6 +7,7 @@ RUN apk --update add --no-cache \
         sudo \
         nano \
         vim \
+        curl \
         bash \
         nginx \
         curl \
