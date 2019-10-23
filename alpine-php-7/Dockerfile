@@ -31,7 +31,8 @@ RUN apk --update add --no-cache \
         php7-phar \
         php7-session \
         php7-tokenizer \
-        php7-xml
+        php7-xml \
+        php7-xmlwriter
 
 #Limpando o cache das instalações, removendo coisas
 #desnecessárias no container
