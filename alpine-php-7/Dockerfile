@@ -31,7 +31,8 @@ RUN apk --update add --no-cache \
         php7-phar \
         php7-session \
         php7-tokenizer \
-        php7-xml
+        php7-xml \
+        php7-xmlwriter
 
 RUN apk --no-cache add shadow && usermod -aG www-data nginx
 
@@ -54,6 +55,11 @@ RUN curl -o /etc/supervisord.conf https://raw.githubusercontent.com/victorgso001
 
 #Criando diretório de aplicação
 RUN mkdir -p /app
+
+#Adicionando www-data como usuário
+RUN set -x ; \
+  addgroup -g 82 -S www-data ; \
+  adduser -u 82 -D -S -G www-data www-data && exit 0 ; exit 1
 
 #Definindo diretório de trabalho
 WORKDIR /app
