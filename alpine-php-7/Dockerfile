@@ -33,12 +33,18 @@ RUN apk --update add --no-cache \
         php7-tokenizer \
         php7-xml
 
+RUN apk --no-cache add shadow && usermod -aG www-data nginx
+
 #Limpando o cache das instalações, removendo coisas
 #desnecessárias no container
 RUN rm -Rf /var/cache/apk/*
 
 #Instalando composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer
+
+#Adicionando usuários e grupos
+RUN addgroup -g 1000 -S www-data \
+    && adduser -u 1000 -D -S -G www-data www-data
 
 #Configurando Nginx
 RUN curl -o /etc/nginx/nginx.conf https://raw.githubusercontent.com/victorgso001/docker-images/master/alpine-php-7/nginx.conf
