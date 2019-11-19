@@ -40,11 +40,11 @@ RUN apk add --virtual build-dependencies \
     bash libpng-dev
 
 # pngquant
-RUN curl -L -O https://github.com/ImageOptim/libimagequant/archive/$LIBIMAGEQUANT_VERSION.tar.gz
-RUN tar xzf $LIBIMAGEQUANT_VERSION.tar.gz
+RUN curl -L -O https://github.com/ImageOptim/libimagequant/archive/2.9.1.tar.gz
+RUN tar xzf 2.9.1.tar.gz
 RUN curl -L -O https://github.com/pornel/pngquant/archive/2.8.0.tar.gz
 RUN tar xzf 2.8.0.tar.gz
-RUN mv libimagequant-$LIBIMAGEQUANT_VERSION/* pngquant-2.8.0/lib/
+RUN mv libimagequant-2.9.1/* pngquant-2.8.0/lib/
 RUN cd pngquant-2.8.0
 RUN ./configure && make && make install
 
