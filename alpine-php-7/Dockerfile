@@ -44,7 +44,7 @@ RUN apk add --virtual build-dependencies \
     bash libpng-dev
 
 # pngquant
-RUN sudo npm install --global pngquant-bin
+RUN npm install --global pngquant-bin --unsafe-perm=true --allow-root
 
 RUN apk --no-cache add shadow && usermod -aG www-data nginx
 
