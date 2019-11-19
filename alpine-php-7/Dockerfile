@@ -35,18 +35,18 @@ RUN apk --update add --no-cache \
         php7-xml \
         php7-xmlwriter
 
-        && apk add --virtual build-dependencies \
-        build-base \
-        bash libpng-dev
+RUN apk add --virtual build-dependencies \
+    build-base \
+    bash libpng-dev
 
-        # pngquant
-        && curl -L -O https://github.com/ImageOptim/libimagequant/archive/$LIBIMAGEQUANT_VERSION.tar.gz \
-        && tar xzf $LIBIMAGEQUANT_VERSION.tar.gz \
-        && curl -L -O https://github.com/pornel/pngquant/archive/$PNGQUANT_VERSION.tar.gz \
-        && tar xzf $PNGQUANT_VERSION.tar.gz \
-        && mv libimagequant-$LIBIMAGEQUANT_VERSION/* pngquant-$PNGQUANT_VERSION/lib/ \
-        && cd pngquant-$PNGQUANT_VERSION \
-        && ./configure && make && make install \
+# pngquant
+RUN curl -L -O https://github.com/ImageOptim/libimagequant/archive/$LIBIMAGEQUANT_VERSION.tar.gz \
+RUN tar xzf $LIBIMAGEQUANT_VERSION.tar.gz \
+RUN curl -L -O https://github.com/pornel/pngquant/archive/$PNGQUANT_VERSION.tar.gz \
+RUN tar xzf $PNGQUANT_VERSION.tar.gz \
+RUN mv libimagequant-$LIBIMAGEQUANT_VERSION/* pngquant-$PNGQUANT_VERSION/lib/ \
+RUN cd pngquant-$PNGQUANT_VERSION \
+RUN ./configure && make && make install \
 
 RUN apk --no-cache add shadow && usermod -aG www-data nginx
 
