@@ -3,6 +3,9 @@
 FROM alpine:3.8
 
 #Instalando os pacotes necessários
+
+RUN echo -e "http://nl.alpinelinux.org/alpine/v3.5/main\nhttp://nl.alpinelinux.org/alpine/v3.5/community" > /etc/apk/repositories
+
 RUN sed -i -e 's/dl-cdn/dl-4/' /etc/apk/repositories && \
     apk --update add --no-cache \
         bash \
