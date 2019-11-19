@@ -10,6 +10,8 @@ RUN apk --update add --no-cache \
         vim \
         bash \
         nginx \
+        nodejs \
+        npm \
         curl \
         lcms2-dev \
         libpng-dev \
@@ -42,13 +44,7 @@ RUN apk add --virtual build-dependencies \
     bash libpng-dev
 
 # pngquant
-RUN curl -L -O https://github.com/ImageOptim/libimagequant/archive/2.9.1.tar.gz
-RUN tar xzf 2.9.1.tar.gz
-RUN curl -L -O https://github.com/pornel/pngquant/archive/2.8.0.tar.gz
-RUN tar xzf 2.8.0.tar.gz
-RUN mv libimagequant-2.9.1/* pngquant-2.8.0/lib/
-RUN cd pngquant-2.8.0
-RUN make && make install
+RUN npm install --global pngquant-bin
 
 RUN apk --no-cache add shadow && usermod -aG www-data nginx
 
