@@ -1,5 +1,5 @@
 #Usando alpine, pois é uma distro menor e só com as coisas
-#necessárias para a utilização
+#necessárias para a utilização.
 FROM alpine:3.9
 
 #Instalando os pacotes necessários
