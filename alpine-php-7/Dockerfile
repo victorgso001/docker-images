@@ -48,7 +48,8 @@ RUN apk add --virtual build-dependencies \
 # pngquant
 RUN npm install --global pngquant-bin --unsafe-perm=true --allow-root
 
-RUN apk --no-cache add shadow && usermod -aG www-data nginx
+RUN adduser -u 1000 -D -S -G www-data www-data
+# RUN apk --no-cache add shadow && usermod -aG www-data nginx
 
 #Limpando o cache das instalações, removendo coisas
 #desnecessárias no container
