@@ -50,4 +50,4 @@ USER www
 EXPOSE 80 443
 
 #Executando comandos para iniciar
-CMD ["php-fpm"] /usr/bin/supervisord -c /etc/supervisord.conf
+CMD ["php-fpm"]
