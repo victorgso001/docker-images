@@ -68,13 +68,19 @@ RUN curl -o /etc/supervisord.conf https://raw.githubusercontent.com/victorgso001
 #Criando diretório de aplicação
 RUN mkdir -p /app
 
+COPY . /app
+
 #Definindo diretório de trabalho
 WORKDIR /app
 
 #Expondo as portas
 EXPOSE 80 443
 
-RUN adduser -D -G www-data -u ${USER_ID:-1000} laravel-user
+RUN adduser -D -S -G www-data -u ${USER_ID:-1000} laravel-user \
+	&& chgrp www-data bootstrap/cache storage -R \
+	&& chmod g+w -R bootstrap/cache storage \
+	&& find . -type d ! -path './vendor/symfony/finder/Tests/Fixtures/with*' ! -path 'space*' | xargs chmod g+w
+
 
 USER laravel-user
 
