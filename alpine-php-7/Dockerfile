@@ -46,8 +46,8 @@ COPY --chown=www:www . /var/www
 # Change current user to www
 USER www
 
-# Expose port 9000 and start php-fpm server
+# Expose port and start php-fpm server
 EXPOSE 80 443
 
 #Executando comandos para iniciar
-CMD /usr/bin/supervisord -c /etc/supervisord.conf
+CMD ["php-fpm"] /usr/bin/supervisord -c /etc/supervisord.conf
