@@ -47,7 +47,7 @@ COPY --chown=www:www . /var/www
 USER www
 
 # Expose port and start php-fpm server
-EXPOSE 80 443
+EXPOSE 9000
 
 #Executando comandos para iniciar
 CMD ["php-fpm"]
