@@ -46,7 +46,7 @@ RUN curl -L -O https://github.com/pornel/pngquant/archive/2.8.0.tar.gz
 RUN tar xzf 2.8.0.tar.gz
 RUN mv libimagequant-2.9.1/* pngquant-2.8.0/lib/
 RUN cd pngquant-2.8.0
-RUN ./configure && make && make install
+RUN make install
 
 RUN apk --no-cache add shadow && usermod -aG www-data nginx
 
