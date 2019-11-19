@@ -56,11 +56,6 @@ RUN curl -o /etc/supervisord.conf https://raw.githubusercontent.com/victorgso001
 #Criando diretório de aplicação
 RUN mkdir -p /app
 
-#Adicionando www-data como usuário
-RUN set -x ; \
-  addgroup -g 82 -S www-data ; \
-  adduser -u 82 -D -S -G www-data www-data && exit 0 ; exit 1
-
 #Definindo diretório de trabalho
 WORKDIR /app
 
