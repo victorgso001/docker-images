@@ -48,7 +48,7 @@ RUN apk add --virtual build-dependencies \
 # pngquant
 RUN npm install --global pngquant-bin --unsafe-perm=true --allow-root
 
-RUN adduser -u 1000 -D -S -G www-data www-data
+# RUN adduser -u 1000 -D -S -G www-data www-data
 
 # RUN apk --no-cache add shadow && usermod -aG www-data nginx
 
@@ -74,10 +74,9 @@ WORKDIR /app
 #Expondo as portas
 EXPOSE 80 443
 
-# Copy existing application directory permissions
-COPY --chown=www-data:www-data . /var/www/html
+RUN adduser -D -G www-data -u ${USER_ID:-1000} laravel-user
 
-USER www-data
+USER laravel-user
 
 #Executando comandos para iniciar
 CMD /usr/bin/supervisord -c /etc/supervisord.conf
