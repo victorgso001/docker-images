@@ -40,13 +40,13 @@ RUN apk add --virtual build-dependencies \
     bash libpng-dev
 
 # pngquant
-RUN curl -L -O https://github.com/ImageOptim/libimagequant/archive/$LIBIMAGEQUANT_VERSION.tar.gz \
-RUN tar xzf $LIBIMAGEQUANT_VERSION.tar.gz \
-RUN curl -L -O https://github.com/pornel/pngquant/archive/$PNGQUANT_VERSION.tar.gz \
-RUN tar xzf $PNGQUANT_VERSION.tar.gz \
-RUN mv libimagequant-$LIBIMAGEQUANT_VERSION/* pngquant-$PNGQUANT_VERSION/lib/ \
-RUN cd pngquant-$PNGQUANT_VERSION \
-RUN ./configure && make && make install \
+RUN curl -L -O https://github.com/ImageOptim/libimagequant/archive/$LIBIMAGEQUANT_VERSION.tar.gz
+RUN tar xzf $LIBIMAGEQUANT_VERSION.tar.gz
+RUN curl -L -O https://github.com/pornel/pngquant/archive/2.8.0.tar.gz
+RUN tar xzf 2.8.0.tar.gz
+RUN mv libimagequant-$LIBIMAGEQUANT_VERSION/* pngquant-2.8.0/lib/
+RUN cd pngquant-2.8.0
+RUN ./configure && make && make install
 
 RUN apk --no-cache add shadow && usermod -aG www-data nginx
 
