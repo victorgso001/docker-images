@@ -49,6 +49,7 @@ RUN apk add --virtual build-dependencies \
 RUN npm install --global pngquant-bin --unsafe-perm=true --allow-root
 
 RUN adduser -u 1000 -D -S -G www-data www-data
+
 # RUN apk --no-cache add shadow && usermod -aG www-data nginx
 
 #Limpando o cache das instalações, removendo coisas
@@ -72,6 +73,12 @@ WORKDIR /app
 
 #Expondo as portas
 EXPOSE 80 443
+
+# Copy existing application directory permissions
+COPY --chown=www-data:www-data . /var/www/html
+
+# Change current user to www
+USER www-data
 
 #Executando comandos para iniciar
 CMD /usr/bin/supervisord -c /etc/supervisord.conf
