@@ -34,10 +34,6 @@ RUN apk --update add --no-cache \
         php7-xml \
         php7-xmlwriter
 
-#Adicionando usuários e grupos
-RUN addgroup -g 1000 -S www-data \
-    && adduser -u 1000 -D -S -G www-data www-data
-
 RUN apk --no-cache add shadow && usermod -aG www-data nginx
 
 #Limpando o cache das instalações, removendo coisas
