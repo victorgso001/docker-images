@@ -4,13 +4,15 @@ FROM alpine:3.9
 
 #Instalando os pacotes necessários
 RUN apk --update add --no-cache \
+        bash \
         sudo \
         nano \
         vim \
         bash \
         nginx \
         curl \
-        libpng \
+        lcms2-dev \
+        libpng-dev \
         supervisor \
         php7 \
         php7-ctype \
