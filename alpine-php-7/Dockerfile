@@ -1,6 +1,6 @@
 #Usando alpine, pois é uma distro menor e só com as coisas
 #necessárias para a utilização
-FROM alpine:3.9
+FROM alpine:3.8
 
 #Instalando os pacotes necessários
 RUN apk --update add --no-cache \
