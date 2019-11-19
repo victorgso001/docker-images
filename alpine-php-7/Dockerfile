@@ -77,8 +77,5 @@ EXPOSE 80 443
 # Copy existing application directory permissions
 COPY --chown=www-data:www-data . /var/www/html
 
-# Change current user to www
-USER www-data
-
 #Executando comandos para iniciar
 CMD /usr/bin/supervisord -c /etc/supervisord.conf
