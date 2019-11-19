@@ -3,7 +3,8 @@
 FROM alpine:3.8
 
 #Instalando os pacotes necessários
-RUN apk --update add --no-cache \
+RUN sed -i -e 's/dl-cdn/dl-4/' /etc/apk/repositories && \
+    apk --update add --no-cache \
         bash \
         sudo \
         nano \
@@ -21,7 +22,7 @@ RUN apk --update add --no-cache \
         php7-curl \
         php7-dom \
         php7-fpm \
-        php7.2-gd \
+        php7-gd \
         php7-json \
         php7-mbstring \
         php7-mysqlnd \
