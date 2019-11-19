@@ -1,63 +1,31 @@
-#Usando alpine, pois é uma distro menor e só com as coisas
-#necessárias para a utilização.
-FROM alpine:3.9
+FROM php:7.2-fpm
 
-#Instalando os pacotes necessários
-ADD https://dl.bintray.com/php-alpine/key/php-alpine.rsa.pub /etc/apk/keys/php-alpine.rsa.pub
+# Set working directory
+WORKDIR /var/www
 
-RUN apk --update add --no-cache \
+# Install dependencies
+RUN apt-get update && apt-get install -y\
         bash \
         sudo \
         nano \
         vim \
-        bash \
         nginx \
-        nodejs \
-        npm \
         curl \
-        lcms2-dev \
         libpng-dev \
         supervisor \
-        php \
-        php-ctype \
-        php-curl \
-        php-dom \
-        php-fpm \
-        php-gd \
-        php-json \
-        php-mbstring \
-        php-mysqlnd \
-        php-pdo_mysql \
-        php-pdo_pgsql \
-        php-opcache \
-        php-openssl \
-        php-pdo \
-        php-pdo_mysql \
-        php-pdo_pgsql \
-        php-pdo_sqlite \
-        php-phar \
-        php-session \
-        php-tokenizer \
-        php-xml \
-        php-xmlwriter
+        curl \
+        openssl \
+        pngquant
 
-RUN apk add --virtual build-dependencies \
-    build-base \
-    bash libpng-dev
+# Clear cache
+RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# pngquant
-RUN npm install --global pngquant-bin --unsafe-perm=true --allow-root
+# Install extensions
+RUN docker-php-ext-install pdo_mysql mbstring zip exif pcntl
+RUN docker-php-ext-install gd
 
-# RUN adduser -u 1000 -D -S -G www-data www-data
-
-# RUN apk --no-cache add shadow && usermod -aG www-data nginx
-
-#Limpando o cache das instalações, removendo coisas
-#desnecessárias no container
-RUN rm -Rf /var/cache/apk/*
-
-#Instalando composer
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer
+# Install composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 #Configurando Nginx
 RUN curl -o /etc/nginx/nginx.conf https://raw.githubusercontent.com/victorgso001/docker-images/master/alpine-php-7/nginx.conf
@@ -65,24 +33,21 @@ RUN curl -o /etc/nginx/nginx.conf https://raw.githubusercontent.com/victorgso001
 #Configurando supervisor
 RUN curl -o /etc/supervisord.conf https://raw.githubusercontent.com/victorgso001/docker-images/master/alpine-php-7/supervisord.conf
 
-#Criando diretório de aplicação
-RUN mkdir -p /app
+# Add user for laravel application
+RUN groupadd -g 1000 www
+RUN useradd -u 1000 -ms /bin/bash -g www www
 
-COPY . /app
+# Copy existing application directory contents
+COPY . /var/www
 
-#Definindo diretório de trabalho
-WORKDIR /app
+# Copy existing application directory permissions
+COPY --chown=www:www . /var/www
 
-#Expondo as portas
+# Change current user to www
+USER www
+
+# Expose port 9000 and start php-fpm server
 EXPOSE 80 443
-
-RUN adduser -D -S -G www-data -u ${USER_ID:-1000} laravel-user \
-	&& chgrp www-data bootstrap/cache storage -R \
-	&& chmod g+w -R bootstrap/cache storage \
-	&& find . -type d ! -path './vendor/symfony/finder/Tests/Fixtures/with*' ! -path 'space*' | xargs chmod g+w
-
-
-USER laravel-user
 
 #Executando comandos para iniciar
 CMD /usr/bin/supervisord -c /etc/supervisord.conf
