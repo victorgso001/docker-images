@@ -1,13 +1,11 @@
 #Usando alpine, pois é uma distro menor e só com as coisas
 #necessárias para a utilização
-FROM alpine:3.8
+FROM alpine:3.9
 
 #Instalando os pacotes necessários
+ADD https://dl.bintray.com/php-alpine/key/php-alpine.rsa.pub /etc/apk/keys/php-alpine.rsa.pub
 
-RUN echo -e "http://nl.alpinelinux.org/alpine/v3.5/main\nhttp://nl.alpinelinux.org/alpine/v3.5/community" > /etc/apk/repositories
-
-RUN sed -i -e 's/dl-cdn/dl-4/' /etc/apk/repositories && \
-    apk --update add --no-cache \
+RUN apk --update add --no-cache \
         bash \
         sudo \
         nano \
@@ -20,29 +18,28 @@ RUN sed -i -e 's/dl-cdn/dl-4/' /etc/apk/repositories && \
         lcms2-dev \
         libpng-dev \
         supervisor \
-        php7 \
-        php7-ctype \
-        php7-curl \
-        php7-dom \
-        php7-fpm \
-        php7-gd \
-        php7-json \
-        php7-mbstring \
-        php7-mysqlnd \
-        php7-pdo_mysql \
-        php7-pdo_pgsql \
-        php7-mcrypt \
-        php7-opcache \
-        php7-openssl \
-        php7-pdo \
-        php7-pdo_mysql \
-        php7-pdo_pgsql \
-        php7-pdo_sqlite \
-        php7-phar \
-        php7-session \
-        php7-tokenizer \
-        php7-xml \
-        php7-xmlwriter
+        php \
+        php-ctype \
+        php-curl \
+        php-dom \
+        php-fpm \
+        php-gd \
+        php-json \
+        php-mbstring \
+        php-mysqlnd \
+        php-pdo_mysql \
+        php-pdo_pgsql \
+        php-opcache \
+        php-openssl \
+        php-pdo \
+        php-pdo_mysql \
+        php-pdo_pgsql \
+        php-pdo_sqlite \
+        php-phar \
+        php-session \
+        php-tokenizer \
+        php-xml \
+        php-xmlwriter
 
 RUN apk add --virtual build-dependencies \
     build-base \
