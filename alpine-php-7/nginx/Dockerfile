@@ -1,8 +1,8 @@
-FROM nginx
+FROM nginx:alpine
 
 RUN rm /etc/nginx/conf.d/default.conf
 
-RUN apt-get update && apt-get install -y\
+RUN apk --update add --no-cache\
         bash \
         sudo \
         nano \
@@ -10,7 +10,7 @@ RUN apt-get update && apt-get install -y\
         curl
 
 # Clear cache
-RUN apt-get clean && rm -rf /var/lib/apt/lists/*
+RUN rm -Rf /var/cache/apk/*
 
 #Configurando Nginx
 RUN curl -o /etc/nginx/nginx.conf https://raw.githubusercontent.com/victorgso001/docker-images/master/alpine-php-7/nginx.conf
