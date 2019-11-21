@@ -8,6 +8,7 @@ RUN apk --update add --no-cache\
         nano \
         vim \
         curl
+
 # Clear cache
 RUN rm -Rf /var/cache/apk/*
 
