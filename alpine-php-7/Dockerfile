@@ -1,18 +1,16 @@
 FROM php:7.2-fpm
 
 # Set working directory
-WORKDIR /var/www
+WORKDIR /home/project-folder/
 
 # Install dependencies
 RUN apt-get update && apt-get install -y \
         bash \
         sudo \
         nano \
-        vim \
         nginx \
         curl \
         libpng-dev \
-        supervisor \
         curl \
         openssl \
         pngquant
@@ -32,10 +30,10 @@ RUN groupadd -g 1000 www
 RUN useradd -u 1000 -ms /bin/bash -g www www
 
 # Copy existing application directory contents
-COPY . /var/www
+COPY . /home/project-folder/
 
 # Copy existing application directory permissions
-COPY --chown=www:www . /var/www
+COPY --chown=www:www . /home/project-folder/
 
 # Change current user to www
 USER www
