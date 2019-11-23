@@ -2,6 +2,8 @@
 #necessárias para a utilização
 FROM alpine:3.9
 
+WORKDIR /home/project-folder
+
 #Instalando os pacotes necessários
 RUN apk --update add --no-cache \
         sudo \
@@ -50,9 +52,8 @@ RUN curl -o /etc/supervisord.conf https://raw.githubusercontent.com/victorgso001
 RUN mkdir -p /app
 
 #Adicionando www-data como usuário
-RUN set -x ; \
-  addgroup -g 1000 -S www-data ; \
-  adduser -u 1000 -D -S -G www-data www-data && exit 0 ; exit 1
+RUN addgroup -g 1000 -S www-data \
+    && adduser -u 1000 -D -S -G www-data www-data
 
 #Definindo diretório de trabalho
 WORKDIR /app
