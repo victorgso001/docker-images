@@ -60,5 +60,7 @@ WORKDIR /app
 #Expondo as portas
 EXPOSE 80 443
 
+USER www-data
+
 #Executando comandos para iniciar
 CMD /usr/bin/supervisord -c /etc/supervisord.conf
