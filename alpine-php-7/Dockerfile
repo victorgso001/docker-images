@@ -51,8 +51,8 @@ RUN mkdir -p /app
 
 #Adicionando www-data como usuário
 RUN set -x ; \
-  addgroup -g 82 -S www-data ; \
-  adduser -u 82 -D -S -G www-data www-data && exit 0 ; exit 1
+  addgroup -g 1000 -S www-data ; \
+  adduser -u 1000 -D -S -G www-data www-data && exit 0 ; exit 1
 
 #Definindo diretório de trabalho
 WORKDIR /app
