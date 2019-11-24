@@ -2,6 +2,9 @@
 #necessárias para a utilização
 FROM php:7.2-fpm-alpine3.10
 
+#Definindo diretório de trabalho
+WORKDIR /home/project-folder
+
 #Instalando os pacotes necessários
 RUN apk --update add --no-cache \
         sudo \
@@ -33,6 +36,10 @@ RUN apk --update add --no-cache \
         php7-xml \
         php7-xmlwriter
 
+# Install extensions
+RUN docker-php-ext-install pdo_mysql mbstring zip exif pcntl
+RUN docker-php-ext-install gd
+
 # We have to pull mongodb from the edge repository for now
 RUN apk add --no-cache --repository http://dl-3.alpinelinux.org/alpine/edge/testing php7-mongodb
 
@@ -54,20 +61,17 @@ RUN curl -o /etc/php7/php-fpm.d/zzz_custom.conf https://raw.githubusercontent.co
 #Criando diretório de aplicação
 RUN mkdir -p /home/project-folder
 
-#Definindo diretório de trabalho
-WORKDIR /home/project-folder
-
-# Add UID '1000' to www-data
-RUN apk add shadow && usermod -u 1000 www-data && groupmod -g 1000 www-data
+# Copy existing application directory contents
+COPY . /home/project-folder/
 
 # Copy existing application directory permissions
 COPY --chown=1000:www-data . /home/project-folder
 
 # Change current user to www
-USER 1000
+USER www-data
 
 #Expondo as portas
-EXPOSE 9000
+EXPOSE 80 443 9000
 
 #Executando comandos para iniciar
 CMD ["php-fpm"]
