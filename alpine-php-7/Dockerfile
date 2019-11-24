@@ -67,7 +67,7 @@ COPY --chown=www-data:www-data . /home/project-folder
 USER www-data
 
 #Expondo as portas
-EXPOSE 80 443
+EXPOSE 9000
 
 #Executando comandos para iniciar
 CMD ["php-fpm"]
