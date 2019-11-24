@@ -61,7 +61,7 @@ WORKDIR /home/project-folder
 RUN apk add shadow && usermod -u 1000 www-data && groupmod -g 1000 www-data
 
 # Copy existing application directory permissions
-COPY --chown=www-data:www-data . $REMOTE_WORKING_DIR
+COPY --chown=www-data:www-data . /home/project-folder
 
 # Change current user to www
 USER www-data
