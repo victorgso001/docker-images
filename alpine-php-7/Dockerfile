@@ -2,8 +2,6 @@
 #necessárias para a utilização
 FROM alpine:3.9
 
-WORKDIR /home/project-folder
-
 #Instalando os pacotes necessários
 RUN apk --update add --no-cache \
         sudo \
@@ -35,6 +33,9 @@ RUN apk --update add --no-cache \
         php7-xml \
         php7-xmlwriter
 
+# We have to pull mongodb from the edge repository for now
+RUN apk add --no-cache --repository http://dl-3.alpinelinux.org/alpine/edge/testing php7-mongodb
+
 #Limpando o cache das instalações, removendo coisas
 #desnecessárias no container
 RUN rm -Rf /var/cache/apk/*
@@ -48,14 +49,16 @@ RUN curl -o /etc/nginx/nginx.conf https://raw.githubusercontent.com/victorgso001
 #Configurando supervisor
 RUN curl -o /etc/supervisord.conf https://raw.githubusercontent.com/victorgso001/docker-images/alpine-php/alpine-php-7/supervisord.conf
 
+RUN curl -o /etc/php7/php-fpm.d/zzz_custom.conf https://raw.githubusercontent.com/victorgso001/docker-images/alpine-php/alpine-php-7/fpm-pool.conf
+
 #Criando diretório de aplicação
-RUN mkdir -p /app
+RUN mkdir -p /home/project-folder
 
 #Adicionando www-data como usuário
 RUN adduser -u 1000 -D -S -G www-data www-data
 
 #Definindo diretório de trabalho
-WORKDIR /app
+WORKDIR /home/project-folder
 
 #Expondo as portas
 EXPOSE 80 443
