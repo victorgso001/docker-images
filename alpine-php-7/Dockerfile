@@ -56,9 +56,6 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin -
 #Configurando Nginx
 RUN curl -o /etc/nginx/nginx.conf https://raw.githubusercontent.com/victorgso001/docker-images/alpine-php/alpine-php-7/nginx.conf
 
-#Configurando supervisor
-RUN curl -o /etc/supervisord.conf https://raw.githubusercontent.com/victorgso001/docker-images/alpine-php/alpine-php-7/supervisord.conf
-
 RUN curl -o /etc/php7/php-fpm.d/zzz_custom.conf https://raw.githubusercontent.com/victorgso001/docker-images/alpine-php/alpine-php-7/fpm-pool.conf
 
 #Criando diretório de aplicação
@@ -74,7 +71,7 @@ COPY --chown=www-data:www-data . /home/project-folder
 # USER www-data
 
 #Expondo as portas
-EXPOSE 80 443 9000
+EXPOSE 80 443
 
 #Executando comandos para iniciar
 CMD ["php-fpm"]
