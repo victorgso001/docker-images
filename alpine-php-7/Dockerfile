@@ -35,11 +35,13 @@ RUN apk --update add --no-cache \
         php7-tokenizer \
         php7-xml \
         php7-xmlwriter \
-        libzip-dev
+        libzip-dev \
+        freetype-dev \
+        libjpeg-turbo-dev \
+        libpng-dev
 
 # Install extensions
 RUN docker-php-ext-install pdo_mysql mbstring zip exif pcntl
-RUN docker-php-ext-install gd
 
 # We have to pull mongodb from the edge repository for now
 RUN apk add --no-cache --repository http://dl-3.alpinelinux.org/alpine/edge/testing php7-mongodb
