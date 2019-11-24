@@ -34,7 +34,8 @@ RUN apk --update add --no-cache \
         php7-session \
         php7-tokenizer \
         php7-xml \
-        php7-xmlwriter
+        php7-xmlwriter \
+        libzip-dev
 
 # Install extensions
 RUN docker-php-ext-install pdo_mysql mbstring zip exif pcntl
