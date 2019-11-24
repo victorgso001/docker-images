@@ -1,6 +1,6 @@
 #Usando alpine, pois é uma distro menor e só com as coisas
 #necessárias para a utilização
-FROM alpine:3.9
+FROM php:7.2-fpm-alpine3.10
 
 #Instalando os pacotes necessários
 RUN apk --update add --no-cache \
@@ -53,9 +53,6 @@ RUN curl -o /etc/php7/php-fpm.d/zzz_custom.conf https://raw.githubusercontent.co
 
 #Criando diretório de aplicação
 RUN mkdir -p /home/project-folder
-
-#Adicionando www-data como usuário
-RUN adduser -u 1000 -D -S -G www-data www-data
 
 #Definindo diretório de trabalho
 WORKDIR /home/project-folder
