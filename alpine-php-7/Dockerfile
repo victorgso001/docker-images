@@ -70,8 +70,8 @@ COPY . /home/project-folder/
 # Copy existing application directory permissions
 COPY --chown=www-data:www-data . /home/project-folder
 
-# Change current user to www
-USER www-data
+# # Change current user to www
+# USER www-data
 
 #Expondo as portas
 EXPOSE 80 443 9000
