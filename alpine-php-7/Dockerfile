@@ -57,8 +57,17 @@ RUN mkdir -p /home/project-folder
 #Definindo diretório de trabalho
 WORKDIR /home/project-folder
 
+# Add UID '1000' to www-data
+RUN apk add shadow && usermod -u 1000 www-data && groupmod -g 1000 www-data
+
+# Copy existing application directory permissions
+COPY --chown=www-data:www-data . $REMOTE_WORKING_DIR
+
+# Change current user to www
+USER www-data
+
 #Expondo as portas
 EXPOSE 80 443
 
 #Executando comandos para iniciar
-CMD /usr/bin/supervisord -c /etc/supervisord.conf
+CMD ["php-fpm"]
