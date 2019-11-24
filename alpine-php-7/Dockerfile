@@ -66,7 +66,7 @@ RUN mkdir -p /home/project-folder
 COPY . /home/project-folder/
 
 # Copy existing application directory permissions
-COPY --chown=1000:www-data . /home/project-folder
+COPY --chown=www-data:www-data . /home/project-folder
 
 # Change current user to www
 USER www-data
