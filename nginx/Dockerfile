@@ -13,4 +13,4 @@ RUN apk --update add --no-cache\
 RUN rm -Rf /var/cache/apk/*
 
 #Configurando Nginx
-RUN curl -o /etc/nginx/conf.d/default.conf https://raw.githubusercontent.com/victorgso001/docker-images/master/alpine-php-7/nginx/nginx.conf
+RUN curl -o /etc/nginx/conf.d/default.conf https://raw.githubusercontent.com/victorgso001/docker-images/nginx-webserver/nginx/nginx.conf
