@@ -30,6 +30,7 @@ RUN apk --update add --no-cache \
         php7-pdo_sqlite \
         php7-phar \
         php7-session \
+        php7-simplexml \
         php7-tokenizer \
         php7-xml \
         php7-xmlwriter
