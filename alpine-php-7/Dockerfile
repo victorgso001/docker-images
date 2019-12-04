@@ -20,6 +20,7 @@ RUN apk --update add --no-cache \
         php7-json \
         php7-mbstring \
         php7-mysqlnd \
+        php7-mongodb \
         php7-pdo_mysql \
         php7-pdo_pgsql \
         php7-mcrypt \
