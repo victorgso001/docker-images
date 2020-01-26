@@ -1,41 +1,21 @@
 #Usando alpine, pois é uma distro menor e só com as coisas
 #necessárias para a utilização
-FROM alpine:3.9
+FROM php:7.2-fpm-alpine
 
 #Instalando os pacotes necessários
-RUN apk --update add --no-cache \
-        sudo \
-        nano \
-        vim \
+RUN apk --update add --no-cache --virtual .ext-deps \
+        autoconf \
         bash \
-        nginx \
         curl \
-        supervisor \
+        g++ \
+        icu-dev \
+        make \
+        nano \
+        nginx \
         php7 \
-        php7-ctype \
-        php7-curl \
-        php7-dom \
-        php7-fileinfo \
-        php7-fpm \
-        php7-json \
-        php7-mbstring \
-        php7-mysqlnd \
-        php7-mongodb \
-        php7-pdo_mysql \
-        php7-pdo_pgsql \
-        php7-mcrypt \
-        php7-opcache \
-        php7-openssl \
-        php7-pdo \
-        php7-pdo_mysql \
-        php7-pdo_pgsql \
-        php7-pdo_sqlite \
-        php7-phar \
-        php7-session \
-        php7-simplexml \
-        php7-tokenizer \
-        php7-xml \
-        php7-xmlwriter
+        sudo \
+        supervisor \
+        vim
 
 #Limpando o cache das instalações, removendo coisas
 #desnecessárias no container
@@ -44,25 +24,26 @@ RUN rm -Rf /var/cache/apk/*
 #Instalando composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer
 
-#Configurando Nginx
-RUN curl -o /etc/nginx/nginx.conf https://raw.githubusercontent.com/victorgso001/docker-images/alpine-php-7/alpine-php-7/nginx.conf
 
-#Configurando supervisor
-RUN curl -o /etc/supervisord.conf https://raw.githubusercontent.com/victorgso001/docker-images/alpine-php-7/alpine-php-7/supervisord.conf
+RUN \
+    apk add --no-cache --virtual .mongodb-ext-build-deps openssl-dev pcre-dev
+# RUN pecl install mongodb-1.2.5
+# RUN docker-php-ext-enable mongodb
 
-#Criando diretório de aplicação
-RUN mkdir -p /app
+RUN \
+    pecl install mongodb && \
+    apk del .mongodb-ext-build-deps && \
+    pecl clear-cache && \
+    docker-php-ext-enable mongodb && \
+    docker-php-source delete
 
-#Adicionando www-data como usuário
-RUN set -x ; \
-  addgroup -g 82 -S www-data ; \
-  adduser -u 82 -D -S -G www-data www-data && exit 0 ; exit 1
+RUN mkdir /home/app
 
-#Definindo diretório de trabalho
-WORKDIR /app
+# Set working directory
+WORKDIR /home/app/
 
 #Expondo as portas
-EXPOSE 80 443
+EXPOSE 9000
 
 #Executando comandos para iniciar
-CMD /usr/bin/supervisord -c /etc/supervisord.conf
+CMD ["php-fpm"]
