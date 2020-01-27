@@ -37,10 +37,10 @@ RUN \
     docker-php-ext-enable mongodb && \
     docker-php-source delete
 
-RUN mkdir /home/app
+RUN mkdir /home/project-folder
 
 # Set working directory
-WORKDIR /home/app/
+WORKDIR /home/project-folder/
 
 #Expondo as portas
 EXPOSE 9000

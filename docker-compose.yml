@@ -4,6 +4,6 @@ services:
     image: victorgso001/alpine-php-mongo:latest
     container_name: app_api
     volumes:
-      - ./:/home/app
+      - ./:/home/project-folder
     ports:
       - 8010:80
