@@ -1,4 +1,4 @@
-FROM php:7.2-fpm
+FROM php:7.4-fpm
 
 # Set working directory
 WORKDIR /home/project-folder/
@@ -18,7 +18,10 @@ RUN apt-get update && apt-get install -y \
         curl \
         openssl \
         pngquant \
-        pkg-config
+        pkg-config \
+        php7.4-soap \
+        php7.4-gd \
+        php-gd
 
 # Install and compile MongoDB php driver
 RUN git clone --branch 1.5.5 https://github.com/mongodb/mongo-php-driver /tmp/php-mongo && \
