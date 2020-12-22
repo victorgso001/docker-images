@@ -1,52 +1,15 @@
-#Usando alpine, pois é uma distro menor e só com as coisas
-#necessárias para a utilização
-FROM php:7.4-fpm-alpine
+FROM php:7.4.11-apache-buster
 
-#Instalando os pacotes necessários
-RUN apk --update add --no-cache --virtual .ext-deps \
-        autoconf \
-        bash \
-        curl \
-        g++ \
-        icu-dev \
-        make \
-        nano \
-        nginx \
-        php7 \
-        sudo \
-        supervisor \
-        vim\ 
-        php7.4-soap \
-        php7.4-gd \
-        php-gd
+RUN apt-get update
+RUN apt-get upgrade -y
+RUN apt-get install -y unzip git libxrender1 libfontconfig1 nano
 
-#Limpando o cache das instalações, removendo coisas
-#desnecessárias no container
-RUN rm -Rf /var/cache/apk/*
+ADD https://raw.githubusercontent.com/mlocati/docker-php-extension-installer/master/install-php-extensions /usr/local/bin/
+RUN chmod uga+x /usr/local/bin/install-php-extensions && sync
 
-#Instalando composer
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer
+RUN install-php-extensions gd mbstring pdo_mysql zip opcache mongodb curl json intl xml bz2 soap
 
-
-RUN \
-    apk add --no-cache --virtual .mongodb-ext-build-deps openssl-dev pcre-dev
-# RUN pecl install mongodb-1.2.5
-# RUN docker-php-ext-enable mongodb
-
-RUN \
-    pecl install mongodb && \
-    apk del .mongodb-ext-build-deps && \
-    pecl clear-cache && \
-    docker-php-ext-enable mongodb && \
-    docker-php-source delete
-
-RUN mkdir /home/project-folder
-
-# Set working directory
-WORKDIR /home/project-folder/
-
-#Expondo as portas
-EXPOSE 9000
-
-#Executando comandos para iniciar
-CMD ["php-fpm"]
+RUN apt-get update
+RUN apt-get install -y supervisor
+RUN apt-get install -y cron
+RUN apt-get install -y tzdata
