@@ -1,6 +1,6 @@
 #Usando alpine, pois é uma distro menor e só com as coisas
 #necessárias para a utilização
-FROM php:7.2-fpm-alpine
+FROM php:7.4-fpm-alpine
 
 #Instalando os pacotes necessários
 RUN apk --update add --no-cache --virtual .ext-deps \
@@ -15,7 +15,10 @@ RUN apk --update add --no-cache --virtual .ext-deps \
         php7 \
         sudo \
         supervisor \
-        vim
+        vim\ 
+        php7.4-soap \
+        php7.4-gd \
+        php-gd
 
 #Limpando o cache das instalações, removendo coisas
 #desnecessárias no container
