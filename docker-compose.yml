@@ -1,7 +1,7 @@
 version: '3.3'
 services:
   app:
-    image: victorgso001/alpine-php-mongo:latest
+    image: victorgso001/php-fpm-nginx
     container_name: app_api
     volumes:
       - ./:/home/project-folder
